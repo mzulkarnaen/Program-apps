@@ -1,0 +1,48 @@
+```
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.yarn-cache/
+
+# Build outputs
+dist/
+build/
+target/
+out/
+.DS_Store
+
+# Environment variables
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+.next/
+.nuxt/
+
+# Database
+prisma/migrations/
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage
+coverage/
+.nyc_output/
+```

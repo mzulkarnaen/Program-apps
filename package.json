@@ -1,0 +1,33 @@
+{
+  "name": "elektronik-service-pos",
+  "version": "1.0.0",
+  "description": "Aplikasi manajemen toko service elektronik dan penjualan sparepart",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm run dev --workspace=@elektronik/api",
+    "dev:web": "npm run dev --workspace=@elektronik/web",
+    "build": "npm run build --workspaces",
+    "build:api": "npm run build --workspace=@elektronik/api",
+    "build:web": "npm run build --workspace=@elektronik/web",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "db:migrate": "npm run db:migrate --workspace=@elektronik/api",
+    "db:seed": "npm run db:seed --workspace=@elektronik/api",
+    "db:studio": "npm run db:studio --workspace=@elektronik/api",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

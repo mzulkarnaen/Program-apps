@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: elektronik_pos_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-elektronik}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-elektronik123}
+      POSTGRES_DB: ${DB_NAME:-elektronik_pos}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-elektronik}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: elektronik_pos_api
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://${DB_USER:-elektronik}:${DB_PASSWORD:-elektronik123}@postgres:5432/${DB_NAME:-elektronik_pos}
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
+      PORT: 3001
+    ports:
+      - "${API_PORT:-3001}:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./apps/api:/app/apps/api
+      - ./packages:/app/packages
+    command: npm run dev --workspace=@elektronik/api
+
+volumes:
+  postgres_data:
